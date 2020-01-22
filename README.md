@@ -1,56 +1,50 @@
-# Serial-Speakers
-Companion toolkit of the *Serial Speakers* dataset, available at https://figshare.com/articles/TV_Series_Corpus/3471839
+# Narrative Smoothing
+Python script to generate a dynamic network of interacting speakers in TV series, as detailed in the following articles :
 
-This repository mainly contains a *Python* script to recover from subtitle files the copyrighted contents of the *Serial Speakers* dataset.
+[Xavier Bost, Vincent Labatut, Serigne Gueye, Georges Linarès.
+*Extraction and Analysis of Dynamic Conversational Networks from TV Series.*
+Springer. Social Network Based Big Data Analysis and Applications, 2018](https://doi.org/10.1007/978-3-319-78196-9_3)
 
-Users are expected to gather, for each of the three annotated TV series, the subtitle files in a single repository.
+[Xavier Bost, Vincent Labatut, Serigne Gueye, Georges Linarès.
+*Narrative Smoothing: Dynamic Conversational Network for the Analysis of TV Series Plots.*
+DyNo: 2nd International Workshop on Dynamics in Networks, in conjunction with the 2016 IEEE/ACM International Conference ASONAM, Aug 2016, San Francisco, United States. pp.1111-1118](https://doi.org/10.1109/ASONAM.2016.7752379)
 
-Each episode must have its own subtitle file in the *.srt* format, and be named so as to mention both the corresponding season and episode. For instance, the subtitle file of the 13th episode of the 2nd season is expected to contain the *S02E13* (or alternatively *s02e03*) substring.
+The annotated input files are part of the *Serial Speakers* dataset (*Breaking Bad*, *Game of Thrones* and *House of Cards*), available at https://figshare.com/articles/TV_Series_Corpus/3471839
 
 ## Usage
 
 ```
-python3 decrypt_text.py --annot_file (path of one of the three following files: "bb.json", "got.json", "hoc.json") \
-                        --subtitles_dir (directory containing the subtitle .srt files) \
-                        --output_annot_file (path of the output annotation file with the text as recovered)
+python3 gen_dynamic_network.py  --input_annot_fname (path of one of the three following files: "bb.json", "got.json", "hoc.json") \
+                                --output_graph_fname (path of the output graph file in .graphml format)
  ```
-In case you experience codec issues with your subtitles, try to set the following additional parameter to another value than the default "utf-8":
-
-```
-                        --subtitles_encoding (encoding, for instance "iso-8859-1"...)
-```
 
 ## Output
 
-The execution of the script displays on the standard output, as the text is being recovered, the average number of deletions/substitutions by episode your particular set of subtitles is causing in the annotated dataset. Deletions are signaled in the output file by an empty *"<>"* tag, and substitutions by an enclosing tag, for instance *"\<Why\>"*. You should expect a rather low number of deletions/substitutions. For information, with my own set of subtitles, I obtain the following average number of deletions/substitutions by episode (included punctuation issues, responsible for most of the differences):
+A multigraph, with multiple edges between two interacting nodes. Every edge between two nodes is indexed by a scene number (attribute "id" in the output .graphml file), and weighted according to the strength of the corresponding relationship in this particular scene (key "d0"). The current episode is recorded in the "d1" key.
 
-  *Breaking Bad*
-  ```
-  Season 1: 41.29 del (avg.); 16.71 sub (avg.)
-  Season 2: 50.92 del (avg.); 27.00 sub (avg.)                                                             
-  Season 3: 68.69 del (avg.); 11.08 sub (avg.)                                                                                                                                                       
-  Season 4: 105.46 del (avg.); 40.08 sub (avg.)
-  Season 5: 73.94 del (avg.); 32.00 sub (avg.)
-  ```
-  *Game of Thrones*
-  ```
-  Season 1: 2.60 del (avg.); 13.90 sub (avg.)
-  Season 2: 5.10 del (avg.); 1.00 sub (avg.)
-  Season 3: 27.10 del (avg.); 4.00 sub (avg.)
-  Season 4: 49.70 del (avg.); 2.50 sub (avg.)
-  Season 5: 28.80 del (avg.); 6.00 sub (avg.)
-  Season 6: 17.80 del (avg.); 2.10 sub (avg.)
-  Season 7: 2.57 del (avg.); 0.57 sub (avg.)
-  ```
-  *House of Cards*
-  ```
-  Season 1: 11.00 del (avg.); 1.62 sub (avg.)
-  Season 2: 13.00 del (avg.); 2.08 sub (avg.)
-  ```
-## Additional files
+Excerpt of the generated graphml file (evolving strength of the relationship between Arya and Jon (*Game of Thrones*) in the scenes 10--14):
 
-In addition, the repository also contains :
-
-- The script (*"encrypt_text.py"*) that we used to encrypt the copyrighted content of the *Serial Speakers* dataset.
-
-- Various *R* scripts (*"sna"* directory), that we used to perform statistical testing of some of the dataset distributions and to compute topological properties of the social networks of interacting speakers.
+```
+...
+<edge source="Jon Snow" target="Arya Stark" id="10">
+  <data key="d0">0.2479</data>
+  <data key="d1">S01E01</data>
+</edge>
+<edge source="Jon Snow" target="Arya Stark" id="11">
+  <data key="d0">0.2588</data>
+  <data key="d1">S01E01</data>
+</edge>
+<edge source="Jon Snow" target="Arya Stark" id="12">
+  <data key="d0">0.2588</data>
+  <data key="d1">S01E01</data>
+</edge>
+<edge source="Jon Snow" target="Arya Stark" id="13">
+  <data key="d0">0.2915</data>
+  <data key="d1">S01E01</data>
+</edge>
+<edge source="Jon Snow" target="Arya Stark" id="14">
+  <data key="d0">0.2915</data>
+  <data key="d1">S01E01</data>
+</edge>
+...
+```
