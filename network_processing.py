@@ -46,8 +46,7 @@ def _sigmoid(x, mu=0.01):
 
     sig = 1 / (1 + np.exp(-mu * x))
 
-    # return round(sig, 4)
-    return round(x, 4)
+    return round(sig, 4)
 
 
 def narrative_smoothing(R, scene_mapping):
