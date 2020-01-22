@@ -22,9 +22,10 @@ python3 gen_dynamic_network.py  --input_annot_fname (path of one of the three fo
 
 A multigraph, with multiple edges between two interacting nodes. Every edge between two nodes is indexed by a scene number (attribute "id" in the output .graphml file), and weighted according to the strength of the corresponding relationship in this particular scene (key "d0"). The current episode is recorded in the "d1" key.
 
-Excerpt of the generated graphml file (scenes 10--14):
+Excerpt of the generated graphml file (evolving strength of the relationship between Arya and Jon (*Game of Thrones*) in the scenes 10--14):
 
-...```
+```
+...
 <edge source="Jon Snow" target="Arya Stark" id="10">
   <data key="d0">0.2479</data>
   <data key="d1">S01E01</data>
