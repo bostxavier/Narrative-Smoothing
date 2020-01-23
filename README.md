@@ -9,7 +9,7 @@ Springer. Social Network Based Big Data Analysis and Applications, 2018](https:/
 *Narrative Smoothing: Dynamic Conversational Network for the Analysis of TV Series Plots.*
 DyNo: 2nd International Workshop on Dynamics in Networks, in conjunction with the 2016 IEEE/ACM International Conference ASONAM, Aug 2016, San Francisco, United States. pp.1111-1118](https://doi.org/10.1109/ASONAM.2016.7752379)
 
-The annotated input files are part of the *Serial Speakers* dataset (*Breaking Bad*, *Game of Thrones* and *House of Cards*), available at https://figshare.com/articles/TV_Series_Corpus/3471839
+The annotated input files are parts of the *Serial Speakers* dataset (*Breaking Bad*, *Game of Thrones* and *House of Cards*), available at https://figshare.com/articles/TV_Series_Corpus/3471839
 
 ## Usage
 
@@ -22,7 +22,7 @@ python3 gen_dynamic_network.py  --input_annot_fname (path of one of the three fo
 
 A multigraph, with multiple edges between two interacting nodes. Every edge between two nodes is indexed by a scene number (attribute "id" in the output .graphml file), and weighted according to the strength of the corresponding relationship in this particular scene (key "d0"). The current episode is recorded in the "d1" key.
 
-Excerpt of the generated graphml file (evolving strength of the relationship between Arya and Jon (*Game of Thrones*) in the scenes 10--14):
+Excerpt of the generated .graphml file (evolving strength of the relationship between Arya and Jon (*Game of Thrones*) in the scenes 10--14):
 
 ```
 ...
